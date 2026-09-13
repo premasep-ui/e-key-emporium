@@ -21,7 +21,18 @@ export function ProductCard({ product }: { product: Product }) {
       className="card-hover group flex flex-col overflow-hidden rounded-2xl border border-border bg-card"
     >
       <div className="relative flex h-28 items-center justify-center border-b border-border bg-accent/40">
-        <span className="font-display text-3xl font-bold text-gradient">{product.logo}</span>
+        {img ? (
+          <img
+            src={img}
+            alt={`Gambar aplikasi ${product.name}`}
+            loading="lazy"
+            width={512}
+            height={512}
+            className="size-20 object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <span className="font-display text-3xl font-bold text-gradient">{product.logo}</span>
+        )}
         <div className="absolute left-2 top-2 flex flex-wrap gap-1">
           {product.badges.slice(0, 2).map((b) => (
             <span
