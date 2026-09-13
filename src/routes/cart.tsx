@@ -3,6 +3,7 @@ import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StockBadge } from "@/components/site/StockBadge";
 import { finalPrice, formatIDR, getProduct, LOW_STOCK } from "@/lib/catalog";
+import { productImage } from "@/lib/product-images";
 import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/cart")({
@@ -52,8 +53,19 @@ function CartPage() {
                 key={item.slug}
                 className="flex gap-3 rounded-2xl border border-border bg-card p-4"
               >
-                <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-accent/50 font-display font-bold text-gradient">
-                  {product.logo}
+                <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-accent/50 font-display font-bold text-gradient">
+                  {productImage(product.slug) ? (
+                    <img
+                      src={productImage(product.slug)}
+                      alt={`Gambar aplikasi ${product.name}`}
+                      loading="lazy"
+                      width={512}
+                      height={512}
+                      className="size-11 object-contain"
+                    />
+                  ) : (
+                    product.logo
+                  )}
                 </span>
                 <div className="min-w-0 flex-1">
                   <Link
