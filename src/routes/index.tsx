@@ -184,8 +184,19 @@ function Home() {
                 params={{ slug: p.slug }}
                 className="card-hover flex items-center gap-3 rounded-2xl border border-primary/25 bg-card p-4"
               >
-                <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-primary/10 font-display font-bold text-primary">
-                  {p.logo}
+                <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-primary/10 font-display font-bold text-primary">
+                  {productImage(p.slug) ? (
+                    <img
+                      src={productImage(p.slug)}
+                      alt={`Gambar aplikasi ${p.name}`}
+                      loading="lazy"
+                      width={512}
+                      height={512}
+                      className="size-10 object-contain"
+                    />
+                  ) : (
+                    p.logo
+                  )}
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">{p.name}</p>
