@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Star } from "lucide-react";
 import { finalPrice, formatIDR, LOW_STOCK, type Product } from "@/lib/catalog";
+import { productImage } from "@/lib/product-images";
 import { StockBadge } from "./StockBadge";
 
 const badgeStyles: Record<string, string> = {
@@ -13,6 +14,7 @@ const badgeStyles: Record<string, string> = {
 export function ProductCard({ product }: { product: Product }) {
   const price = finalPrice(product);
   const discounted = product.promoPrice !== undefined;
+  const img = productImage(product.slug);
 
   return (
     <Link

@@ -52,8 +52,19 @@ function CartPage() {
                 key={item.slug}
                 className="flex gap-3 rounded-2xl border border-border bg-card p-4"
               >
-                <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-accent/50 font-display font-bold text-gradient">
-                  {product.logo}
+                <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-accent/50 font-display font-bold text-gradient">
+                  {productImage(product.slug) ? (
+                    <img
+                      src={productImage(product.slug)}
+                      alt={`Gambar aplikasi ${product.name}`}
+                      loading="lazy"
+                      width={512}
+                      height={512}
+                      className="size-11 object-contain"
+                    />
+                  ) : (
+                    product.logo
+                  )}
                 </span>
                 <div className="min-w-0 flex-1">
                   <Link

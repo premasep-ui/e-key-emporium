@@ -93,7 +93,17 @@ function ProductDetail() {
       <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_360px]">
         <div>
           <div className="grid h-56 place-items-center rounded-3xl border border-border bg-accent/40 sm:h-72">
-            <span className="font-display text-6xl font-bold text-gradient">{product.logo}</span>
+            {productImage(product.slug) ? (
+              <img
+                src={productImage(product.slug)}
+                alt={`Gambar aplikasi ${product.name}`}
+                width={512}
+                height={512}
+                className="size-40 object-contain sm:size-52"
+              />
+            ) : (
+              <span className="font-display text-6xl font-bold text-gradient">{product.logo}</span>
+            )}
           </div>
 
           <h1 className="mt-6 text-2xl font-bold">{product.name}</h1>
