@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/accordion";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, faqs, finalPrice, formatIDR, products, reviews } from "@/lib/catalog";
+import { productImage } from "@/lib/product-images";
 import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({

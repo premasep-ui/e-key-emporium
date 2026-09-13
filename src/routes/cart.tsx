@@ -3,6 +3,7 @@ import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StockBadge } from "@/components/site/StockBadge";
 import { finalPrice, formatIDR, getProduct, LOW_STOCK } from "@/lib/catalog";
+import { productImage } from "@/lib/product-images";
 import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/cart")({

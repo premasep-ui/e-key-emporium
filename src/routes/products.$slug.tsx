@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StockBadge } from "@/components/site/StockBadge";
 import { ProductCard } from "@/components/site/ProductCard";
 import { finalPrice, formatIDR, getProduct, LOW_STOCK, products } from "@/lib/catalog";
+import { productImage } from "@/lib/product-images";
 import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/products/$slug")({
