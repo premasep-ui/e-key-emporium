@@ -14,13 +14,307 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          actor: string
+          created_at: string
+          from_status: string | null
+          id: string
+          meta: Json | null
+          order_id: string | null
+          to_status: string | null
+        }
+        Insert: {
+          action: string
+          actor?: string
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          meta?: Json | null
+          order_id?: string | null
+          to_status?: string | null
+        }
+        Update: {
+          action?: string
+          actor?: string
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          meta?: Json | null
+          order_id?: string | null
+          to_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_id: string
+          product_name: string
+          qty: number
+          unit_price_idr: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_id: string
+          product_name: string
+          qty: number
+          unit_price_idr: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string
+          product_name?: string
+          qty?: number
+          unit_price_idr?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          buyer_email: string
+          buyer_name: string
+          buyer_wa: string
+          created_at: string
+          expires_at: string
+          id: string
+          order_code: string
+          paid_at: string | null
+          payment_method: string
+          status: string
+          subtotal_idr: number
+          total_idr: number
+        }
+        Insert: {
+          buyer_email: string
+          buyer_name: string
+          buyer_wa: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          order_code: string
+          paid_at?: string | null
+          payment_method: string
+          status?: string
+          subtotal_idr: number
+          total_idr: number
+        }
+        Update: {
+          buyer_email?: string
+          buyer_name?: string
+          buyer_wa?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          order_code?: string
+          paid_at?: string | null
+          payment_method?: string
+          status?: string
+          subtotal_idr?: number
+          total_idr?: number
+        }
+        Relationships: []
+      }
+      payment_events: {
+        Row: {
+          event_id: string
+          event_type: string | null
+          id: string
+          payload: Json | null
+          processed_at: string
+          provider: string
+        }
+        Insert: {
+          event_id: string
+          event_type?: string | null
+          id?: string
+          payload?: Json | null
+          processed_at?: string
+          provider: string
+        }
+        Update: {
+          event_id?: string
+          event_type?: string | null
+          id?: string
+          payload?: Json | null
+          processed_at?: string
+          provider?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          order_id: string
+          provider: string
+          provider_order_id: string | null
+          provider_transaction_id: string | null
+          raw: Json | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency: string
+          id?: string
+          order_id: string
+          provider: string
+          provider_order_id?: string | null
+          provider_transaction_id?: string | null
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          order_id?: string
+          provider?: string
+          provider_order_id?: string | null
+          provider_transaction_id?: string | null
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_stock: {
+        Row: {
+          created_at: string
+          id: string
+          note: string | null
+          order_id: string | null
+          product_id: string
+          secret_data: string
+          sold_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          order_id?: string | null
+          product_id: string
+          secret_data: string
+          sold_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          order_id?: string | null
+          product_id?: string
+          secret_data?: string
+          sold_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_stock_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_stock_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          price_idr: number
+          promo_price_idr: number | null
+          slug: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          price_idr: number
+          promo_price_idr?: number | null
+          slug: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          price_idr?: number
+          promo_price_idr?: number | null
+          slug?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      fulfill_paid_order: {
+        Args: {
+          p_amount: number
+          p_currency: string
+          p_order_id: string
+          p_provider: string
+          p_provider_txn: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
