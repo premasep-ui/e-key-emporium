@@ -30,7 +30,9 @@ function CheckoutPage() {
   const { items, subtotal } = useCart();
   const [form, setForm] = useState({ name: "", email: "", wa: "" });
   const [coupon, setCoupon] = useState("");
-  const [method, setMethod] = useState<PaymentMethod>("qris");
+  const [method, setMethod] = useState<PaymentMethod>("paypal");
+  const [loading, setLoading] = useState(false);
+  const startPaypal = useServerFn(createPaypalCheckout);
 
   if (items.length === 0) {
     return (
