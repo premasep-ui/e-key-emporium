@@ -15,6 +15,8 @@
 - [ ] Aktifkan Lovable Cloud: tabel users, products, categories, product_stock, orders, order_items, payments, reviews, coupons, coupon_usage, notifications, user_roles, audit_logs
 - [ ] Login email/password + Google OAuth, profil, riwayat transaksi
 - [ ] Pembayaran QRIS via payment gateway (rekomendasi: Midtrans) + webhook verifikasi signature
+- [ ] PayPal (Sandbox → Production): create order server-side, verifikasi via API/webhook, idempotency, PAYPAL_CLIENT_ID/PAYPAL_CLIENT_SECRET/PAYPAL_ENVIRONMENT
+- [ ] Halaman status pembayaran (menunggu/berhasil/gagal/kedaluwarsa) dengan animasi status
 - [ ] Auto delivery dengan database transaction/locking stok
 - [ ] Halaman /payment/[orderId], /order/[orderId], /orders, /profile
 - [ ] Admin dashboard + manajemen produk, stok, order, kupon, review, settings
