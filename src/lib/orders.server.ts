@@ -149,7 +149,7 @@ export async function fulfillPaidOrder(
     p_provider_txn: transactionId ?? null,
     p_amount: amount ? Number(amount.value) : null,
     p_currency: amount?.currency ?? null,
-  });
+  } as never);
   if (error) throw new Error(error.message);
   const result = data as { ok: boolean; status?: string; reason?: string };
   return result.status ?? (result.ok ? "DELIVERED" : "PROCESSING");
@@ -180,7 +180,7 @@ export async function claimPaymentEvent(
     payload: payload as never,
   });
   if (error) {
-    if (error.code === "23505" || error.code === "23505".slice(0) || error.message.includes("duplicate")) {
+    if (error.code === "23505" || error.message.includes("duplicate")) {
       return false;
     }
     throw new Error(error.message);
