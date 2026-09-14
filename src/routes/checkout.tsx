@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Check, ShoppingBag, Ticket } from "lucide-react";
 import { toast } from "sonner";
@@ -8,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { finalPrice, formatIDR, getProduct } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { PaymentMethodSelect, type PaymentMethod } from "@/components/site/PaymentMethodSelect";
+import { createPaypalCheckout } from "@/lib/payments.functions";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -24,7 +26,19 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const steps = ["Data pembeli", "Ringkasan", "Pembayaran QRIS", "Verifikasi", "Produk dikirim"];
+const steps = ["Data pembeli", "Ringkasan", "Pembayaran", "Verifikasi", "Produk dikirim"];
+
+function errorMessage(code: string) {
+  if (code.startsWith("OUT_OF_STOCK")) {
+    const name = code.split(":")[1];
+    return `Stok ${name ?? "produk"} tidak mencukupi. Kurangi jumlah atau pilih produk lain.`;
+  }
+  if (code === "PRODUCT_UNAVAILABLE") return "Ada produk yang sudah tidak tersedia.";
+  if (code === "PAYPAL_NOT_CONFIGURED") return "Pembayaran PayPal belum dikonfigurasi.";
+  if (code === "PAYPAL_UNAVAILABLE" || code === "PAYPAL_NO_APPROVAL_URL")
+    return "PayPal sedang tidak dapat dihubungi. Coba lagi sebentar.";
+  return "Gagal membuat pesanan. Coba lagi sebentar.";
+}
 
 function CheckoutPage() {
   const { items, subtotal } = useCart();
@@ -46,19 +60,37 @@ function CheckoutPage() {
     );
   }
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.wa) {
       toast.error("Lengkapi data pembeli terlebih dahulu");
       return;
     }
-    toast.info(
-      method === "qris" ? "Pembayaran QRIS belum aktif" : "Pembayaran PayPal belum aktif",
-      {
-        description:
-          "Pesanan dan pembayaran sungguhan aktif setelah database dan akun pembayaran terhubung.",
-      },
-    );
+    if (method === "qris") {
+      toast.info("Pembayaran QRIS belum aktif", {
+        description: "Untuk sekarang silakan gunakan PayPal.",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const result = await startPaypal({
+        data: {
+          buyer: { name: form.name.trim(), email: form.email.trim(), wa: form.wa.trim() },
+          items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+        },
+      });
+      if (!result.ok) {
+        toast.error(errorMessage(result.error));
+        return;
+      }
+      window.location.href = result.approveUrl;
+    } catch {
+      toast.error("Gagal membuat pesanan. Coba lagi sebentar.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
