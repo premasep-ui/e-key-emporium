@@ -21,3 +21,12 @@
 - [ ] Halaman /payment/[orderId], /order/[orderId], /orders, /profile
 - [ ] Admin dashboard + manajemen produk, stok, order, kupon, review, settings
 - [ ] Invoice PDF, notifikasi email/WhatsApp, review & rating
+
+## PayPal (kode selesai, tunggu kredensial)
+- [x] Database: orders, order_items, product_stock, payments, payment_events, audit_logs + fungsi pengiriman otomatis dengan locking
+- [x] Buat pesanan + order PayPal di server, redirect ke halaman pembayaran PayPal resmi
+- [x] Verifikasi status di server (API PayPal + webhook bertanda tangan, idempotent)
+- [x] Halaman /payment/[orderId] (status animasi) dan /order/[orderId] (tampilkan/salin data, invoice)
+- [ ] Isi PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PAYPAL_ENVIRONMENT, PAYPAL_WEBHOOK_ID
+- [ ] Daftarkan URL webhook PayPal: /api/public/paypal/webhook
+- [ ] QRIS (Midtrans) menyusul
