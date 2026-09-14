@@ -120,8 +120,20 @@ function CheckoutPage() {
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="mt-6 w-full">
-            Buat Pesanan &amp; Bayar QRIS
+          <div className="mt-7 border-t border-border pt-6">
+            <PaymentMethodSelect value={method} onChange={setMethod} />
+            <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-accent/30 px-4 py-3">
+              <span className="text-sm text-muted-foreground">Total pembayaran</span>
+              <span className="text-lg font-bold text-primary">{formatIDR(subtotal)}</span>
+            </div>
+          </div>
+
+          <Button
+            type="submit"
+            size="lg"
+            className="mt-6 w-full transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            {method === "qris" ? "Buat Pesanan & Bayar QRIS" : "Buat Pesanan & Bayar PayPal"}
           </Button>
           <p className="mt-3 text-xs text-muted-foreground">
             Dengan melanjutkan, Anda menyetujui{" "}
