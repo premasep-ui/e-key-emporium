@@ -64,19 +64,45 @@ const icons: Record<string, React.ComponentType<{ className?: string }>> = {
   Boxes,
 };
 
+type SectionDecor = "glow" | "shapes" | "gradient" | "grid" | "none";
+
+function SectionDecoration({ decor }: { decor: SectionDecor }) {
+  if (decor === "none") return null;
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {decor === "glow" && (
+        <div className="decor-orb animate-glow-pulse absolute left-1/4 top-0 size-[360px] opacity-45" />
+      )}
+      {decor === "shapes" && (
+        <>
+          <div className="animate-float absolute right-[6%] top-2 size-20 rotate-45 rounded-xl border border-primary/15" />
+          <div className="animate-drift absolute left-[4%] bottom-0 size-28 rounded-full border border-white/[0.06]" />
+        </>
+      )}
+      {decor === "gradient" && (
+        <div className="decor-orb animate-drift absolute right-[10%] top-6 size-[380px] opacity-35" />
+      )}
+      {decor === "grid" && <div className="bg-line-grid decor-fade-mask absolute inset-0 opacity-60" />}
+    </div>
+  );
+}
+
 function Section({
   title,
   subtitle,
   action,
+  decor = "none",
   children,
 }: {
   title: string;
   subtitle?: string;
   action?: React.ReactNode;
+  decor?: SectionDecor;
   children: React.ReactNode;
 }) {
   return (
-    <section className="mx-auto mt-14 max-w-6xl px-4">
+    <section className="relative mx-auto mt-14 max-w-6xl px-4">
+      <SectionDecoration decor={decor} />
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold sm:text-2xl">{title}</h2>
