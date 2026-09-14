@@ -22,6 +22,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
+import { Route as OrderOrderIdRouteImport } from './routes/order.$orderId'
+import { Route as PaymentOrderIdRouteImport } from './routes/payment.$orderId'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as ApiPublicPaypalWebhookRouteImport } from './routes/api/public/paypal/webhook'
@@ -91,6 +93,16 @@ const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
   path: '/categories/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrderOrderIdRoute = OrderOrderIdRouteImport.update({
+  id: '/order/$orderId',
+  path: '/order/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentOrderIdRoute = PaymentOrderIdRouteImport.update({
+  id: '/payment/$orderId',
+  path: '/payment/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
@@ -120,6 +132,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/categories/$slug': typeof CategoriesSlugRoute
+  '/order/$orderId': typeof OrderOrderIdRoute
+  '/payment/$orderId': typeof PaymentOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/categories/': typeof CategoriesIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -138,6 +152,8 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/categories/$slug': typeof CategoriesSlugRoute
+  '/order/$orderId': typeof OrderOrderIdRoute
+  '/payment/$orderId': typeof PaymentOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/categories': typeof CategoriesIndexRoute
   '/products': typeof ProductsIndexRoute
@@ -157,6 +173,8 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/categories/$slug': typeof CategoriesSlugRoute
+  '/order/$orderId': typeof OrderOrderIdRoute
+  '/payment/$orderId': typeof PaymentOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/categories/': typeof CategoriesIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -177,6 +195,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/categories/$slug'
+    | '/order/$orderId'
+    | '/payment/$orderId'
     | '/products/$slug'
     | '/categories/'
     | '/products/'
@@ -195,6 +215,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/categories/$slug'
+    | '/order/$orderId'
+    | '/payment/$orderId'
     | '/products/$slug'
     | '/categories'
     | '/products'
@@ -213,6 +235,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/categories/$slug'
+    | '/order/$orderId'
+    | '/payment/$orderId'
     | '/products/$slug'
     | '/categories/'
     | '/products/'
@@ -232,6 +256,8 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
+  OrderOrderIdRoute: typeof OrderOrderIdRoute
+  PaymentOrderIdRoute: typeof PaymentOrderIdRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -331,6 +357,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/order/$orderId': {
+      id: '/order/$orderId'
+      path: '/order/$orderId'
+      fullPath: '/order/$orderId'
+      preLoaderRoute: typeof OrderOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment/$orderId': {
+      id: '/payment/$orderId'
+      path: '/payment/$orderId'
+      fullPath: '/payment/$orderId'
+      preLoaderRoute: typeof PaymentOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/': {
       id: '/products/'
       path: '/products'
@@ -368,6 +408,8 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
+  OrderOrderIdRoute: OrderOrderIdRoute,
+  PaymentOrderIdRoute: PaymentOrderIdRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,

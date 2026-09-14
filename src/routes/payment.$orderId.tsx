@@ -70,6 +70,7 @@ function PaymentStatusPage() {
       const timer = setTimeout(() => void navigate({ to: "/order/$orderId", params: { orderId } }), 1400);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [clear, navigate, orderId, status]);
 
   if (detail && !detail.ok) {
