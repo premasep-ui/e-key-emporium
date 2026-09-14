@@ -165,9 +165,18 @@ function CheckoutPage() {
           <Button
             type="submit"
             size="lg"
+            disabled={loading}
             className="mt-6 w-full transition-transform duration-200 hover:-translate-y-0.5"
           >
-            {method === "qris" ? "Buat Pesanan & Bayar QRIS" : "Buat Pesanan & Bayar PayPal"}
+            {loading ? (
+              <>
+                <Loader2 className="size-4 animate-spin" /> Menyiapkan pembayaran…
+              </>
+            ) : method === "qris" ? (
+              "Buat Pesanan & Bayar QRIS"
+            ) : (
+              "Buat Pesanan & Bayar PayPal"
+            )}
           </Button>
           <p className="mt-3 text-xs text-muted-foreground">
             Dengan melanjutkan, Anda menyetujui{" "}
