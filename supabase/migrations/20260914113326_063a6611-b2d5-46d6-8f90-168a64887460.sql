@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.fulfill_paid_order(uuid, text, text, numeric, text) FROM anon, authenticated;
