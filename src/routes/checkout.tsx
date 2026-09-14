@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { finalPrice, formatIDR, getProduct } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
+import { PaymentMethodSelect, type PaymentMethod } from "@/components/site/PaymentMethodSelect";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -29,6 +30,7 @@ function CheckoutPage() {
   const { items, subtotal } = useCart();
   const [form, setForm] = useState({ name: "", email: "", wa: "" });
   const [coupon, setCoupon] = useState("");
+  const [method, setMethod] = useState<PaymentMethod>("qris");
 
   if (items.length === 0) {
     return (
