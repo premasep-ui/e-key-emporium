@@ -64,19 +64,45 @@ const icons: Record<string, React.ComponentType<{ className?: string }>> = {
   Boxes,
 };
 
+type SectionDecor = "glow" | "shapes" | "gradient" | "grid" | "none";
+
+function SectionDecoration({ decor }: { decor: SectionDecor }) {
+  if (decor === "none") return null;
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {decor === "glow" && (
+        <div className="decor-orb animate-glow-pulse absolute left-1/4 top-0 size-[360px] opacity-45" />
+      )}
+      {decor === "shapes" && (
+        <>
+          <div className="animate-float absolute right-[6%] top-2 size-20 rotate-45 rounded-xl border border-primary/15" />
+          <div className="animate-drift absolute left-[4%] bottom-0 size-28 rounded-full border border-white/[0.06]" />
+        </>
+      )}
+      {decor === "gradient" && (
+        <div className="decor-orb animate-drift absolute right-[10%] top-6 size-[380px] opacity-35" />
+      )}
+      {decor === "grid" && <div className="bg-line-grid decor-fade-mask absolute inset-0 opacity-60" />}
+    </div>
+  );
+}
+
 function Section({
   title,
   subtitle,
   action,
+  decor = "none",
   children,
 }: {
   title: string;
   subtitle?: string;
   action?: React.ReactNode;
+  decor?: SectionDecor;
   children: React.ReactNode;
 }) {
   return (
-    <section className="mx-auto mt-14 max-w-6xl px-4">
+    <section className="relative mx-auto mt-14 max-w-6xl px-4">
+      <SectionDecoration decor={decor} />
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold sm:text-2xl">{title}</h2>
@@ -103,8 +129,14 @@ function Home() {
   return (
     <div className="pb-4">
       {/* Hero */}
-      <section className="bg-hero-grid border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 py-14 text-center sm:py-20">
+      <section className="bg-hero-grid relative overflow-hidden border-b border-border">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="bg-line-grid decor-fade-mask absolute inset-0" />
+          <div className="decor-orb animate-glow-pulse absolute left-1/2 top-[-220px] size-[560px] -translate-x-1/2" />
+          <div className="animate-float absolute left-[8%] top-[22%] size-16 rotate-12 rounded-2xl border border-primary/20 bg-primary/5" />
+          <div className="animate-drift absolute right-[10%] bottom-[14%] size-24 rounded-full border border-white/10" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:py-20">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
             <Zap className="size-3.5" /> Pengiriman otomatis 24 jam
           </span>
@@ -153,7 +185,7 @@ function Home() {
       </section>
 
       {/* Kategori */}
-      <Section title="Kategori" subtitle="Pilih kebutuhan digital Anda">
+      <Section title="Kategori" subtitle="Pilih kebutuhan digital Anda" decor="shapes">
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-9">
           {categories.map((c) => {
             const Icon = icons[c.icon] ?? Boxes;
@@ -173,7 +205,7 @@ function Home() {
       </Section>
 
       {/* Promo */}
-      <Section title="Promo hari ini" subtitle="Hemat lebih banyak, stok terbatas">
+      <Section title="Promo hari ini" subtitle="Hemat lebih banyak, stok terbatas" decor="gradient">
         <div className="grid gap-3 sm:grid-cols-3">
           {promos.map((p) => {
             const off = Math.round((1 - finalPrice(p) / p.price) * 100);
@@ -217,6 +249,7 @@ function Home() {
       {/* Populer */}
       <Section
         title="Produk populer"
+        decor="glow"
         subtitle="Paling banyak dibeli pelanggan"
         action={
           <Button asChild variant="ghost" size="sm">
@@ -234,7 +267,7 @@ function Home() {
       </Section>
 
       {/* Terbaru */}
-      <Section title="Produk terbaru" subtitle="Baru masuk di RILZPEDIA">
+      <Section title="Produk terbaru" subtitle="Baru masuk di RILZPEDIA" decor="glow">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {latest.map((p) => (
             <ProductCard key={p.id} product={p} />
@@ -286,7 +319,7 @@ function Home() {
       </Section>
 
       {/* Ulasan */}
-      <Section title="Kata pelanggan" subtitle="Ulasan asli dari pembeli RILZPEDIA">
+      <Section title="Kata pelanggan" subtitle="Ulasan asli dari pembeli RILZPEDIA" decor="gradient">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {reviews.map((r) => (
             <div key={r.name} className="rounded-2xl border border-border bg-card p-5">
@@ -305,7 +338,7 @@ function Home() {
       </Section>
 
       {/* FAQ */}
-      <Section title="Pertanyaan yang sering ditanya">
+      <Section title="Pertanyaan yang sering ditanya" decor="grid">
         <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card px-4">
           {faqs.map((f, i) => (
             <AccordionItem key={f.q} value={`faq-${i}`}>

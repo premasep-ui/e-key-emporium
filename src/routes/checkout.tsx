@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { finalPrice, formatIDR, getProduct } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
+import { PaymentMethodSelect, type PaymentMethod } from "@/components/site/PaymentMethodSelect";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -29,6 +30,7 @@ function CheckoutPage() {
   const { items, subtotal } = useCart();
   const [form, setForm] = useState({ name: "", email: "", wa: "" });
   const [coupon, setCoupon] = useState("");
+  const [method, setMethod] = useState<PaymentMethod>("qris");
 
   if (items.length === 0) {
     return (
@@ -48,9 +50,13 @@ function CheckoutPage() {
       toast.error("Lengkapi data pembeli terlebih dahulu");
       return;
     }
-    toast.info("Pembayaran QRIS belum aktif", {
-      description: "Langkah berikutnya: menghubungkan penyedia pembayaran QRIS.",
-    });
+    toast.info(
+      method === "qris" ? "Pembayaran QRIS belum aktif" : "Pembayaran PayPal belum aktif",
+      {
+        description:
+          "Pesanan dan pembayaran sungguhan aktif setelah database dan akun pembayaran terhubung.",
+      },
+    );
   };
 
   return (
@@ -114,8 +120,20 @@ function CheckoutPage() {
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="mt-6 w-full">
-            Buat Pesanan &amp; Bayar QRIS
+          <div className="mt-7 border-t border-border pt-6">
+            <PaymentMethodSelect value={method} onChange={setMethod} />
+            <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-accent/30 px-4 py-3">
+              <span className="text-sm text-muted-foreground">Total pembayaran</span>
+              <span className="text-lg font-bold text-primary">{formatIDR(subtotal)}</span>
+            </div>
+          </div>
+
+          <Button
+            type="submit"
+            size="lg"
+            className="mt-6 w-full transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            {method === "qris" ? "Buat Pesanan & Bayar QRIS" : "Buat Pesanan & Bayar PayPal"}
           </Button>
           <p className="mt-3 text-xs text-muted-foreground">
             Dengan melanjutkan, Anda menyetujui{" "}
