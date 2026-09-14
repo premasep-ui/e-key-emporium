@@ -185,7 +185,7 @@ function Home() {
       </section>
 
       {/* Kategori */}
-      <Section title="Kategori" subtitle="Pilih kebutuhan digital Anda">
+      <Section title="Kategori" subtitle="Pilih kebutuhan digital Anda" decor="shapes">
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-9">
           {categories.map((c) => {
             const Icon = icons[c.icon] ?? Boxes;
@@ -205,7 +205,7 @@ function Home() {
       </Section>
 
       {/* Promo */}
-      <Section title="Promo hari ini" subtitle="Hemat lebih banyak, stok terbatas">
+      <Section title="Promo hari ini" subtitle="Hemat lebih banyak, stok terbatas" decor="gradient">
         <div className="grid gap-3 sm:grid-cols-3">
           {promos.map((p) => {
             const off = Math.round((1 - finalPrice(p) / p.price) * 100);
@@ -249,6 +249,7 @@ function Home() {
       {/* Populer */}
       <Section
         title="Produk populer"
+        decor="glow"
         subtitle="Paling banyak dibeli pelanggan"
         action={
           <Button asChild variant="ghost" size="sm">
@@ -266,7 +267,7 @@ function Home() {
       </Section>
 
       {/* Terbaru */}
-      <Section title="Produk terbaru" subtitle="Baru masuk di RILZPEDIA">
+      <Section title="Produk terbaru" subtitle="Baru masuk di RILZPEDIA" decor="glow">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {latest.map((p) => (
             <ProductCard key={p.id} product={p} />
@@ -318,7 +319,7 @@ function Home() {
       </Section>
 
       {/* Ulasan */}
-      <Section title="Kata pelanggan" subtitle="Ulasan asli dari pembeli RILZPEDIA">
+      <Section title="Kata pelanggan" subtitle="Ulasan asli dari pembeli RILZPEDIA" decor="gradient">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {reviews.map((r) => (
             <div key={r.name} className="rounded-2xl border border-border bg-card p-5">
@@ -337,7 +338,7 @@ function Home() {
       </Section>
 
       {/* FAQ */}
-      <Section title="Pertanyaan yang sering ditanya">
+      <Section title="Pertanyaan yang sering ditanya" decor="grid">
         <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card px-4">
           {faqs.map((f, i) => (
             <AccordionItem key={f.q} value={`faq-${i}`}>
