@@ -50,9 +50,13 @@ function CheckoutPage() {
       toast.error("Lengkapi data pembeli terlebih dahulu");
       return;
     }
-    toast.info("Pembayaran QRIS belum aktif", {
-      description: "Langkah berikutnya: menghubungkan penyedia pembayaran QRIS.",
-    });
+    toast.info(
+      method === "qris" ? "Pembayaran QRIS belum aktif" : "Pembayaran PayPal belum aktif",
+      {
+        description:
+          "Pesanan dan pembayaran sungguhan aktif setelah database dan akun pembayaran terhubung.",
+      },
+    );
   };
 
   return (
