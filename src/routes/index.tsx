@@ -103,8 +103,14 @@ function Home() {
   return (
     <div className="pb-4">
       {/* Hero */}
-      <section className="bg-hero-grid border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 py-14 text-center sm:py-20">
+      <section className="bg-hero-grid relative overflow-hidden border-b border-border">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="bg-line-grid decor-fade-mask absolute inset-0" />
+          <div className="decor-orb animate-glow-pulse absolute left-1/2 top-[-220px] size-[560px] -translate-x-1/2" />
+          <div className="animate-float absolute left-[8%] top-[22%] size-16 rotate-12 rounded-2xl border border-primary/20 bg-primary/5" />
+          <div className="animate-drift absolute right-[10%] bottom-[14%] size-24 rounded-full border border-white/10" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:py-20">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
             <Zap className="size-3.5" /> Pengiriman otomatis 24 jam
           </span>

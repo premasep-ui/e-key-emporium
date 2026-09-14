@@ -20,9 +20,9 @@ export function ProductCard({ product }: { product: Product }) {
     <Link
       to="/products/$slug"
       params={{ slug: product.slug }}
-      className="card-hover group flex flex-col overflow-hidden rounded-2xl border border-border bg-card"
+      className="card-hover group flex flex-col overflow-hidden rounded-2xl border border-border bg-card/75 shadow-[var(--shadow-card)] backdrop-blur-sm"
     >
-      <div className="relative flex h-28 items-center justify-center border-b border-border bg-accent/40">
+      <div className="bg-dot-grid relative flex h-28 items-center justify-center border-b border-border bg-accent/40">
         {img ? (
           <img
             src={img}
